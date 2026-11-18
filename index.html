@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#f4f6f9" />
+<title>رابطة الشيخ عزالدين - أولاد الفكي</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+<link rel="manifest" href="manifest.json" />
+
+<style>
+  :root {
+    --bg-body: #f4f6f9;        /* خلفية الصفحة (رمادي فاتح جداً) */
+    --bg-card: #ffffff;        /* لون البطاقات */
+    --bg-inner: #f8fafc;       /* لون البطاقات الداخلية */
+    --primary: #e74c3c;        /* اللون الأحمر (من الصورة) */
+    --primary-dark: #c0392b;   
+    --primary-light: #fdedec;
+    --text-main: #071009;      /* نص غامق */
+    --text-muted: #64748b;     /* نص ثانوي */
+    --border: #e2e8f0;
+    --radius-card: 24px;
+    --radius-inner: 16px;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  }
+
+  [data-theme="dark"] {
+    --bg-body: #0f172a; --bg-card: #1e293b; --bg-inner: #0f172a;
+    --primary-light: #451a03; --text-main: #f8fafc; --text-muted: #94a3b8;
+    --border: #334155; --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif; 
+    background-color: var(--bg-body); color: var(--text-main); 
+    line-height: 1.6; padding-bottom: 3rem; transition: 0.3s;
+  }
+  button, input { font-family: inherit; }
+  button { cursor: pointer; border: none; background: none; }
+  
+  .container { max-width: 680px; margin: 0 auto; padding: 1rem; display: flex; flex-direction: column; gap: 1.2rem; }
+
+  /* ========== الترويسة العلوية المحدثة ========== */
+  .app-header {
+    background: var(--bg-card); border-radius: var(--radius-card);
+    padding: 3.5rem 1.5rem 2rem; /* مساحة علوية للأيقونات */
+    text-align: center; box-shadow: var(--shadow);
+    position: relative;
+  }
+  
+  /* الأيقونات في الزاوية اليسرى العليا */
+  .header-actions { 
+    position: absolute; top: 1.2rem; right: ;: 1.2rem; 
+    display: flex; gap: 0.5rem; 
+  }
+  .btn-icon {
+    width: 36px; height: 36px; border-radius: 50%; background: var(--bg-inner);
+    color: var(--text-muted); display: flex; align-items: center; justify-content: center; transition: 0.2s;
+    border: 1px solid var(--border);
+  }
+  .btn-icon:hover { background: var(--primary-light); color: var(--primary); border-color: var(--primary); }
+  
+  /* العنوان الرئيسي */
+  .header-title h1 { 
+    font-size: 1.8rem; 
+    font-weight: 700; 
+    color: #071009 /* لون غامق جداً للنص */
+    margin-bottom: 0.3rem; 
+    line-height: 1.3;
+  }
+  [data-theme="dark"] .header-title h1 { color: var(--text-main); }
+  
+  /* العنوان الفرعي */
+  .header-subtitle { 
+    color: var(--text-muted); 
+    font-size: 1.1rem; 
+    font-weight: 600; 
+    margin-bottom: 1.5rem; 
+  }
+  
+  /* صندوق الآية */
+  .ayah-box {
+    background: var(--bg-inner); border: 1px solid var(--border);
+    border-radius: var(--radius-inner); padding: 1rem;
+    color: var(--text-main); font-size: 0.95rem; font-weight: 600;
+  }
+
+  /* ========== عناوين الأقسام ========== */
+  .section-title {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-right: 1rem; border-right: 5px solid var(--primary);
+    margin-bottom: 1rem;
+  }
+  .section-title h2 { font-size: 1.2rem; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 0.5rem; }
+  .section-title h2 i { color: var(--primary); }
+
+  /* ========== البطاقات ========== */
+  .card { background: var(--bg-card); border-radius: var(--radius-card); padding: 1.5rem; box-shadow: var(--shadow); }
+  
+  /* بطاقة المجموع والمنصرفات */
+  .main-total-card { text-align: center; padding: 2rem 1.5rem; }
+  .total-label { color: var(--text-muted); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+  .total-value { color: var(--primary); font-size: 2.5rem; font-weight: 700; }
+  .expense-divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
+  .expense-flex { display: flex; justify-content: space-between; align-items: center; background: var(--primary-light); padding: 1rem 1.5rem; border-radius: var(--radius-inner); }
+  .expense-label { color: var(--primary); font-weight: 700; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem;}
+  .expense-value { color: var(--primary); font-weight: 700; font-size: 1.3rem; }
+
+  /* بطاقات اليوم والشهر */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .mini-card { background: var(--bg-card); border-radius: var(--radius-card); padding: 1.5rem 1rem; text-align: center; box-shadow: var(--shadow); }
+  .mini-card i { font-size: 1.8rem; color: var(--primary); margin-bottom: 0.8rem; }
+  .mini-card .label { color: var(--text-muted); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.3rem; }
+  .mini-card .value { color: var(--text-main); font-size: 1.6rem; font-weight: 700; }
+
+  /* بطاقة الحساب */
+  .bank-row { display: flex; flex-direction: column; gap: 0.8rem; }
+  .bank-item { display: flex; align-items: center; justify-content: space-between; background: var(--bg-inner); padding: 1rem; border-radius: var(--radius-inner); border: 1px solid var(--border); }
+  .bank-item span { color: var(--text-muted); font-size: 0.85rem; display: block; margin-bottom: 0.2rem;}
+  .bank-item strong { font-size: 1.1rem; color: var(--text-main); display: block;}
+  .acc-num { direction: ltr; color: var(--primary); font-family: monospace; font-size: 1.3rem !important; letter-spacing: 1px; }
+  .copy-btn { color: var(--primary); background: var(--primary-light); width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+  .copy-btn:hover { background: var(--primary); color: white; }
+
+  /* النماذج */
+  .form-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+  @media (min-width: 480px) { .form-grid { grid-template-columns: 1fr 1fr; } }
+  .form-grid .full-width { grid-column: 1 / -1; }
+  .input-group { position: relative; }
+  .input-group label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.4rem; font-weight: 500;}
+  .input-group input {
+    width: 100%; padding: 0.9rem 2.8rem 0.9rem 1rem; border: 1.5px solid var(--border);
+    border-radius: var(--radius-inner); font-size: 1rem; background: var(--bg-inner); color: var(--text-main); transition: 0.2s;
+  }
+  .input-group input:focus { outline: none; border-color: var(--primary); background: var(--bg-card); box-shadow: 0 0 0 3px var(--primary-light); }
+  .input-group i { position: absolute; left: 1rem; top: 2.3rem; color: var(--text-muted); }
+  
+  .checkbox-group { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.6rem; }
+  .checkbox-group input { width: 18px; height: 18px; accent-color: var(--primary); }
+
+  .btn-primary, .btn-danger {
+    width: 100%; padding: 1rem; border-radius: var(--radius-inner); font-weight: 700; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 1.2rem; transition: 0.2s;
+  }
+  .btn-primary { background: var(--primary); color: white; }
+  .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3); }
+  .btn-danger { background: var(--primary-light); color: var(--primary); }
+  .btn-danger:hover { background: var(--primary); color: white; }
+
+  /* الجداول */
+  .table-responsive { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; text-align: right; }
+  th { background: var(--bg-inner); color: var(--text-muted); font-size: 0.85rem; padding: 0.8rem; border-bottom: 1px solid var(--border); }
+  td { padding: 1rem 0.8rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .donor-info { display: flex; flex-direction: column; }
+  .donor-name { font-weight: 700; font-size: 0.95rem; }
+  .process-num { font-size: 0.75rem; color: var(--text-muted); }
+  .amount-val { font-weight: 700; color: var(--primary); white-space: nowrap; }
+
+  .actions { display: flex; gap: 0.5rem; justify-content: flex-end; }
+  .btn-icon-sm { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: var(--bg-inner); color: var(--text-muted); }
+  .btn-icon-sm:hover { background: var(--primary-light); color: var(--primary); }
+
+  /* الترقيم */
+  .pagination { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+  .btn-page { background: var(--bg-inner); border: 1.5px solid var(--border); color: var(--text-main); padding: 0.5rem 1rem; border-radius: 10px; font-weight: 600; display: flex; align-items: center; gap: 0.4rem; transition: 0.2s; }
+  .btn-page:hover:not(:disabled) { background: var(--primary); color: white; border-color: var(--primary); }
+  .btn-page:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* نافذة المشرف */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 1rem; }
+  .modal-overlay.active { display: flex; }
+  .modal { background: var(--bg-card); width: 100%; max-width: 400px; border-radius: var(--radius-card); padding: 2rem; text-align: center; }
+  .modal h2 { margin-bottom: 1.5rem; font-size: 1.2rem; color: var(--text-main); }
+  .modal input { width: 100%; padding: 0.8rem; border: 1.5px solid var(--border); border-radius: 10px; margin-bottom: 1rem; background: var(--bg-inner); color: var(--text-main); }
+
+  /* إخفاء عناصر المشرف */
+  .admin-only { display: none !important; }
+  .admin-active .admin-only { display: flex !important; }
+  .admin-active th.admin-only { display: table-cell !important; }
+  .admin-active td.admin-only { display: table-cell !important; }
+  .admin-active .admin-form-card { display: block !important; }
+
+  .toast { position: fixed; bottom: 20px; left: 50%; transform: translate(-50%, 100px); background: var(--text-main); color: var(--bg-card); padding: 0.8rem 1.5rem; border-radius: 50px; font-weight: 500; opacity: 0; transition: 0.3s; z-index: 1001; }
+  .toast.show { transform: translate(-50%, 0); opacity: 1; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- 1. الترويسة -->
+  <div class="app-header">
+    <!-- الأيقونات في اليسار -->
+    <div class="header-actions">
+      <button class="btn-icon" onclick="openLoginModal()"><i class="fa-solid fa-user-shield"></i></button>
+      <button class="btn-icon" onclick="toggleTheme()"><i class="fa-solid fa-moon" id="themeIcon"></i></button>
+    </div>
+    
+    <!-- النص فقط في المنتصف -->
+    <div class="header-title">
+      <h1>رابطة الشيخ عزالدين</h1>
+    </div>
+    <div class="header-subtitle">أولاد الفكي</div>
+    
+    <div class="ayah-box">
+      ﴿ مَّثَلُ الَّذِينَ يُنفِقُونَ أَمْوَالَهُمْ فِي سَبِيلِ اللَّهِ كَمَثَلِ حَبَّةٍ أَنبَتَتْ سَبْعَ سَنَابِلَ فِي كُلِّ سُنبُلَةٍ مِّائَةُ حَبَّةٍ ۗ وَاللَّهُ يُضَاعِفُ لِمَن يَشَاءُ ۗ وَاللَّهُ وَاسِعٌ عَلِيمٌ ﴾
+    </div>
+  </div>
+
+  <!-- 2. المجموع الكلي والمنصرفات -->
+  <div class="card main-total-card">
+    <div class="total-label">مجموع التبرعات الكلي</div>
+    <div class="total-value" id="statTotalDonations">0</div>
+    <div class="expense-divider"></div>
+    <div class="expense-flex">
+      <div class="expense-label"><i class="fa-solid fa-arrow-trend-down"></i> إجمالي المنصرفات</div>
+      <div class="expense-value" id="statTotalExpenses">0</div>
+    </div>
+    <div style="font-size: 0.9rem; color: var(--text-muted); margin-top: 1rem; font-weight: 600;">
+      الرصيد المتبقي بالصندوق: <span id="statCurrentBalance" style="color:var(--primary)">0</span> ج.س
+    </div>
+  </div>
+
+  <!-- 3 و 4. تبرعات اليوم والشهر -->
+  <div class="grid-2">
+    <div class="mini-card">
+      <i class="fa-solid fa-calendar-day"></i>
+      <div class="label">تبرع اليوم</div>
+      <div class="value" id="statToday">0</div>
+    </div>
+    <div class="mini-card">
+      <i class="fa-solid fa-calendar-alt"></i>
+      <div class="label">تبرع الشهر</div>
+      <div class="value" id="statMonth">0</div>
+    </div>
+  </div>
+
+  <!-- 5. بيانات الحساب -->
+  <div class="card">
+    <div class="section-title">
+      <h2><i class="fa-solid fa-building-columns"></i> بيانات الحساب</h2>
+    </div>
+    <div class="bank-row">
+      <div class="bank-item">
+        <div>
+          <span>رقم الحساب</span>
+          <strong class="acc-num">3372343</strong>
+        </div>
+        <button class="copy-btn" onclick="copyText('3372343')"><i class="fa-regular fa-copy"></i></button>
+      </div>
+      <div class="bank-item">
+        <div>
+          <span>الاسم</span>
+          <strong>عبدالله حمدالنيل الامين حمدالنيل</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- نموذج إضافة تبرع -->
+  <div class="card">
+    <div class="section-title">
+      <h2><i class="fa-solid fa-heart-pulse"></i> تسجيل تبرع جديد</h2>
+    </div>
+    <form id="donateForm">
+      <div class="form-grid">
+        <div class="input-group full-width">
+          <label>اسم المتبرع</label>
+          <input type="text" id="donorName" required placeholder="أدخل الاسم هنا..." />
+          <i class="fa-regular fa-user"></i>
+          <div class="checkbox-group">
+            <input type="checkbox" id="isAnonymous" onchange="toggleAnon()" />
+            <label for="isAnonymous" style="margin:0; cursor:pointer;">تبرع مجهول (فاعل خير)</label>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>المبلغ (جنيه)</label>
+          <input type="number" id="donorAmount" required min="1" placeholder="مثال: 5000" />
+          <i class="fa-solid fa-coins"></i>
+        </div>
+        <div class="input-group">
+          <label>رقم العملية (4 أرقام إنجليزية)</label>
+          <input type="text" id="processNum" required maxlength="4" pattern="\d{4}" 
+                 oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,4)" 
+                 placeholder="1234" style="text-align:left; direction:ltr;" />
+          <i class="fa-solid fa-receipt"></i>
+        </div>
+      </div>
+      <button type="submit" class="btn-primary" id="submitBtn">
+        <i class="fa-solid fa-plus-circle"></i> إضافة التبرع
+      </button>
+    </form>
+  </div>
+
+  <!-- نموذج المنصرفات (للمشرف فقط) -->
+  <div class="card admin-form-card admin-only" style="border: 2px dashed var(--primary); display: none;">
+    <div class="section-title">
+      <h2><i class="fa-solid fa-money-bill-transfer"></i> تسجيل منصرف (للمشرف)</h2>
+    </div>
+    <form id="expenseForm">
+      <div class="form-grid">
+        <div class="input-group full-width">
+          <label>البيان (على ماذا تم الصرف؟)</label>
+          <input type="text" id="expenseDesc" required placeholder="مثال: شراء سلال غذائية..." />
+          <i class="fa-solid fa-pen"></i>
+        </div>
+        <div class="input-group full-width">
+          <label>المبلغ المصروف (جنيه)</label>
+          <input type="number" id="expenseAmount" required min="1" placeholder="مثال: 10000" />
+          <i class="fa-solid fa-arrow-trend-down"></i>
+        </div>
+      </div>
+      <button type="submit" class="btn-danger">
+        <i class="fa-solid fa-minus-circle"></i> خصم المبلغ من الرصيد
+      </button>
+    </form>
+  </div>
+
+  <!-- قائمة المتبرعين -->
+  <div class="card">
+    <div class="section-title">
+      <h2><i class="fa-solid fa-list-ul"></i> قائمة المتبرعين</h2>
+      <div style="display:flex; gap:0.5rem;">
+        <button class="btn-icon-sm admin-only" onclick="copyDonorsList()" title="نسخ القائمة"><i class="fa-solid fa-copy"></i></button>
+        <button class="btn-icon-sm admin-only" onclick="archiveMonth()" title="ترحيل الشهر" style="color:var(--primary)"><i class="fa-solid fa-calendar-check"></i></button>
+      </div>
+    </div>
+    
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>اسم المتبرع</th>
+            <th>المبلغ</th>
+            <th style="text-align: left;" class="admin-only">إجراء</th>
+          </tr>
+        </thead>
+        <tbody id="donationsTable"></tbody>
+      </table>
+    </div>
+
+    <div class="pagination" id="paginationControls" style="display: none;">
+      <button onclick="prevPage()" id="prevBtn" class="btn-page"><i class="fa-solid fa-chevron-right"></i> السابق</button>
+      <span id="pageInfo" style="font-size: 0.9rem; color: var(--text-muted); font-weight: 600;">صفحة 1</span>
+      <button onclick="nextPage()" id="nextBtn" class="btn-page">التالي <i class="fa-solid fa-chevron-left"></i></button>
+    </div>
+  </div>
+
+  <!-- سجل المنصرفات -->
+  <div class="card">
+    <div class="section-title">
+      <h2><i class="fa-solid fa-file-invoice-dollar"></i> سجل المنصرفات</h2>
+    </div>
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>البيان</th>
+            <th>المبلغ</th>
+            <th style="text-align: left;" class="admin-only">إجراء</th>
+          </tr>
+        </thead>
+        <tbody id="expensesTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- نافذة تسجيل الدخول -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <h2><i class="fa-solid fa-lock" style="color:var(--primary)"></i> دخول المشرفين</h2>
+    <input type="email" id="adminEmail" placeholder="البريد الإلكتروني" />
+    <input type="password" id="adminPass" placeholder="كلمة المرور" />
+    <button class="btn-primary" onclick="loginAdmin()" id="loginBtn">تسجيل الدخول</button>
+    <button style="margin-top:1rem; font-size:0.85rem; color:var(--text-muted);" onclick="closeLoginModal()">إلغاء</button>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<!-- Firebase SDK v9 -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, deleteDoc, updateDoc, writeBatch, getDocs, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+  import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
+  // ⚠️ ضع إعدادات Firebase الخاصة بك هنا
+  
+  const firebaseConfig = {
+  apiKey: "AIzaSyCEhC-mF6O8CxC0YMgkOsTMGmwDoNwujwc",
+  authDomain: "a-alfaki.firebaseapp.com",
+  projectId: "a-alfaki",
+  storageBucket: "a-alfaki.firebasestorage.app",
+  messagingSenderId: "775379313974",
+  appId: "1:775379313974:web:fc40aeaec6626dcbb33f97"
+};
+
+   // الوضع الليلي
+  const themeIcon = document.getElementById('themeIcon');
+  if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    themeIcon.className = 'fa-solid fa-sun';
+  }
+  window.toggleTheme = () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    themeIcon.className = isDark ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+  };
+
+  window.showToast = (msg, isError = false) => {
+    const toast = document.getElementById('toast');
+    toast.innerHTML = `<i class="fa-solid ${isError ? 'fa-circle-exclamation' : 'fa-circle-check'}" style="color:${isError ? '#ef4444' : '#10b981'}; margin-left:5px"></i> ${msg}`;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  };
+
+  window.copyText = (text) => {
+    navigator.clipboard.writeText(text).then(() => showToast('تم النسخ بنجاح'));
+  };
+
+  window.toggleAnon = () => {
+    const nameInput = document.getElementById('donorName');
+    const isAnon = document.getElementById('isAnonymous').checked;
+    if (isAnon) { nameInput.value = "فاعل خير"; nameInput.disabled = true; }
+    else { nameInput.value = ""; nameInput.disabled = false; }
+  };
+
+  // جلب البيانات
+  onSnapshot(settingsRef, (doc) => {
+    settingsData = doc.exists() ? doc.data() : { baseBalance: 0 };
+    calculateStats();
+  });
+
+  onSnapshot(qDonations, (snapshot) => {
+    donationsData = [];
+    snapshot.forEach((doc) => donationsData.push({ id: doc.id, ...doc.data() }));
+    calculateStats();
+    renderDonationsTable();
+  });
+
+  onSnapshot(qExpenses, (snapshot) => {
+    expensesData = [];
+    snapshot.forEach((doc) => expensesData.push({ id: doc.id, ...doc.data() }));
+    calculateStats();
+    renderExpensesTable();
+  });
+
+  function calculateStats() {
+    const now = new Date();
+    const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
+
+    let totalDonationsAllTime = 0;
+    let todayDonations = 0;
+    let monthDonations = 0;
+
+    donationsData.forEach(d => {
+      totalDonationsAllTime += Number(d.amount);
+      if (d.createdAt >= startOfDay) todayDonations += Number(d.amount);
+      if (d.createdAt >= startOfMonth) monthDonations += Number(d.amount);
+    });
+
+    let totalExpensesAllTime = 0;
+    expensesData.forEach(e => totalExpensesAllTime += Number(e.amount));
+
+    const currentBalance = Number(settingsData.baseBalance || 0) + totalDonationsAllTime - totalExpensesAllTime;
+
+    document.getElementById('statTotalDonations').innerText = (Number(settingsData.baseBalance || 0) + totalDonationsAllTime).toLocaleString();
+    document.getElementById('statTotalExpenses').innerText = totalExpensesAllTime.toLocaleString();
+    document.getElementById('statCurrentBalance').innerText = currentBalance.toLocaleString();
+    document.getElementById('statToday').innerText = todayDonations.toLocaleString();
+    document.getElementById('statMonth').innerText = monthDonations.toLocaleString();
+  }
+
+  document.getElementById('donateForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const processVal = document.getElementById('processNum').value;
+    if(processVal.length !== 4) return showToast('رقم العملية يجب أن يكون 4 أرقام', true);
+
+    const btn = document.getElementById('submitBtn');
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري الحفظ...';
+    btn.disabled = true;
+
+    try {
+      await addDoc(donationsRef, {
+        name: document.getElementById('donorName').value.trim(),
+        amount: Number(document.getElementById('donorAmount').value),
+        process: processVal,
+        createdAt: Date.now()
+      });
+      e.target.reset();
+      document.getElementById('donorName').disabled = false;
+      showToast('تم تسجيل التبرع بنجاح');
+    } catch (error) {
+      showToast('حدث خطأ', true);
+    } finally {
+      btn.innerHTML = '<i class="fa-solid fa-plus-circle"></i> إضافة التبرع';
+      btn.disabled = false;
+    }
+  });
+
+  document.getElementById('expenseForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if(!isAdmin) return showToast('غير مصرح لك', true);
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري الخصم...';
+    btn.disabled = true;
+
+    try {
+      await addDoc(expensesRef, {
+        description: document.getElementById('expenseDesc').value.trim(),
+        amount: Number(document.getElementById('expenseAmount').value),
+        createdAt: Date.now()
+      });
+      e.target.reset();
+      showToast('تم تسجيل المنصرف');
+    } catch (error) {
+      showToast('حدث خطأ', true);
+    } finally {
+      btn.innerHTML = '<i class="fa-solid fa-minus-circle"></i> خصم المبلغ من الرصيد';
+      btn.disabled = false;
+    }
+  });
+
+  function renderDonationsTable() {
+    const tbody = document.getElementById('donationsTable');
+    const paginationControls = document.getElementById('paginationControls');
+    tbody.innerHTML = '';
+
+    if (donationsData.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding: 2rem;">لا توجد تبرعات مسجلة.</td></tr>`;
+      paginationControls.style.display = 'none';
+      return;
+    }
+
+    paginationControls.style.display = 'flex';
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const paginatedData = donationsData.slice(startIndex, startIndex + itemsPerPage);
+
+    paginatedData.forEach((data, index) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${startIndex + index + 1}</td>
+        <td><div class="donor-name">${escapeHtml(data.name)}</div><div class="process-num">عملية: ${escapeHtml(data.process)}</div></td>
+        <td><span class="amount-val">${Number(data.amount).toLocaleString()}</span> <small>ج.س</small></td>
+        <td class="admin-only" style="text-align:left;">
+          <button class="btn-icon-sm" onclick="deleteDonation('${data.id}')"><i class="fa-solid fa-trash"></i></button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    const totalPages = Math.ceil(donationsData.length / itemsPerPage) || 1;
+    document.getElementById('pageInfo').innerText = `صفحة ${currentPage} من ${totalPages}`;
+    document.getElementById('prevBtn').disabled = (currentPage === 1);
+    document.getElementById('nextBtn').disabled = (currentPage === totalPages);
+  }
+
+  function renderExpensesTable() {
+    const tbody = document.getElementById('expensesTable');
+    tbody.innerHTML = '';
+    if (expensesData.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; padding: 1rem; color:var(--text-muted)">لا توجد منصرفات.</td></tr>`;
+      return;
+    }
+    expensesData.forEach((data) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${escapeHtml(data.description)}</td>
+        <td><span style="font-weight:700; color:var(--primary)">${Number(data.amount).toLocaleString()}</span> <small>ج.س</small></td>
+        <td class="admin-only" style="text-align:left;">
+          <button class="btn-icon-sm" onclick="deleteExpense('${data.id}')"><i class="fa-solid fa-trash"></i></button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  window.prevPage = () => { if (currentPage > 1) { currentPage--; renderDonationsTable(); } };
+  window.nextPage = () => { if (currentPage < Math.ceil(donationsData.length / itemsPerPage)) { currentPage++; renderDonationsTable(); } };
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      isAdmin = true;
+      document.body.classList.add('admin-active');
+      closeLoginModal();
+      renderDonationsTable();
+      renderExpensesTable();
+      showToast('مرحباً، تم تفعيل صلاحيات المشرف');
+    } else {
+      isAdmin = false;
+      document.body.classList.remove('admin-active');
+      renderDonationsTable();
+      renderExpensesTable();
+    }
+  });
+
+  window.openLoginModal = () => document.getElementById('loginModal').classList.add('active');
+  window.closeLoginModal = () => document.getElementById('loginModal').classList.remove('active');
+  window.loginAdmin = async () => {
+    const btn = document.getElementById('loginBtn');
+    btn.innerText = 'جاري التحقق...';
+    try {
+      await signInWithEmailAndPassword(auth, document.getElementById('adminEmail').value, document.getElementById('adminPass').value);
+    } catch (error) { showToast('بيانات الدخول خاطئة', true); }
+    finally { btn.innerText = 'تسجيل الدخول'; }
+  };
+
+  window.deleteDonation = async (id) => {
+    if(confirm('حذف هذا التبرع؟')) await deleteDoc(doc(db, "donations", id));
+  };
+  window.deleteExpense = async (id) => {
+    if(confirm('حذف هذا المنصرف؟')) await deleteDoc(doc(db, "expenses", id));
+  };
+
+  window.archiveMonth = async () => {
+    if(!isAdmin) return;
+    if(!confirm('هل أنت متأكد من ترحيل الشهر؟ سيتم جمع الرصيد الحالي ومسح تبرعات ومصروفات الشهر.')) return;
+    let totalDons = donationsData.reduce((s, d) => s + Number(d.amount), 0);
+    let totalExps = expensesData.reduce((s, e) => s + Number(e.amount), 0);
+    let currentBalance = Number(settingsData.baseBalance || 0) + totalDons - totalExps;
+    await setDoc(settingsRef, { baseBalance: currentBalance, lastArchive: Date.now() });
+    const batch = writeBatch(db);
+    donationsData.forEach(d => batch.delete(doc(db, "donations", d.id)));
+    expensesData.forEach(e => batch.delete(doc(db, "expenses", e.id)));
+    await batch.commit();
+    currentPage = 1;
+    showToast('تم الترحيل بنجاح');
+  };
+
+  window.copyDonorsList = () => {
+    if(donationsData.length === 0) return showToast('لا يوجد متبرعون', true);
+    let text = `📋 كشف تبرعات:\n\n`;
+    donationsData.forEach((d, i) => {
+      text += `${i + 1}. ${d.name} : ${Number(d.amount).toLocaleString()} ج.س\n`;
+    });
+    let total = donationsData.reduce((s, d) => s + Number(d.amount), 0);
+    text += `\n------------------------\nالإجمالي: ${total.toLocaleString()} ج.س`;
+    navigator.clipboard.writeText(text).then(() => showToast('تم نسخ القائمة'));
+  };
+
+  function escapeHtml(text) {
+    if(!text) return '';
+    return text.toString().replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+  }
+</script>
+</body>
+</html>
